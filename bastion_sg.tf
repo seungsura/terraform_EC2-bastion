@@ -2,18 +2,19 @@ resource "aws_security_group" "bastion_sg" {
     name = "bastion_sg"
     description = "allow all"
     vpc_id = module.vpc.vpc_id
-    
+
     ingress {
         description = "allow all for eks"
         from_port = 0
         to_port = 0
         protocol = "-1"
-        cidr_blocks = [module.vpc.vpc_cidr_block]
+        cidr_blocks = ["0.0.0.0/0"]
+        
     }
 
     egress = [
-            
-        {            
+
+        {
             description = "allow all"
             from_port = 0
             to_port = 0
@@ -30,3 +31,5 @@ resource "aws_security_group" "bastion_sg" {
         Name = "allow all"
     }
 }
+
+
