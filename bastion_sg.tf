@@ -1,10 +1,10 @@
 resource "aws_security_group" "bastion_sg" {
     name = "bastion_sg"
-    description = "allow all"
+    description = "inbound all"
     vpc_id = module.vpc.vpc_id
 
     ingress {
-        description = "allow all for eks"
+        description = "inbound 0.0.0.0"
         from_port = 0
         to_port = 0
         protocol = "-1"
@@ -15,7 +15,7 @@ resource "aws_security_group" "bastion_sg" {
     egress = [
 
         {
-            description = "allow all"
+            description = "outbound all"
             from_port = 0
             to_port = 0
             protocol = "-1"
@@ -28,8 +28,17 @@ resource "aws_security_group" "bastion_sg" {
         }
     ]
     tags = {
-        Name = "allow all"
+        Name = "Inbound & outbound allow all"
     }
+}
+
+resource "aws_security_group_rule" "allow_ingress" {
+  type        = "ingress"
+  from_port   = 0
+  to_port     = 0
+  protocol    = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = module.eks.cluster_security_group_id
 }
 
 

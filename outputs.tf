@@ -22,3 +22,12 @@ output "bastion_sg_id" {
   description = "bastion_sg"
   value = aws_security_group.bastion_sg.id
 }
+
+output "s3_bucket_id" {
+    description = "S3 Bucket"
+    value = module.s3_bucket.s3_bucket_id
+}
+
+output "eks_cluster_security_group_id" {
+  value = module.eks.cluster_security_group_id
+}

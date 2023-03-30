@@ -38,6 +38,18 @@ module "vpc" {
   }
 }
 
+module "s3_bucket" {
+  source = "terraform-aws-modules/s3-bucket/aws"
+
+  bucket = "terraform.eks.s3.bucket.for.dev.team"
+  acl    = "private"
+
+  versioning = {
+    enabled = true
+  }
+
+}
+
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "19.10.0"
@@ -52,10 +64,7 @@ module "eks" {
 
   eks_managed_node_group_defaults = {
     ami_type = "AL2_x86_64"
-
   }
-
-  cluster_security_group_id = aws_security_group.bastion_sg.id
 
   eks_managed_node_groups = {
     one = {
@@ -66,10 +75,6 @@ module "eks" {
       min_size     = 1
       max_size     = 2
       desired_size = 1
-
-      source_security_group_ids = [
-        aws_security_group.bastion_sg.id
-      ]
     }
 
     two = {
@@ -80,10 +85,6 @@ module "eks" {
       min_size     = 1
       max_size     = 2
       desired_size = 1
-
-      source_security_group_ids = [
-        aws_security_group.bastion_sg.id
-      ]
     }
   }
 }
