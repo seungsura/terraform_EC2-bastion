@@ -1,7 +1,7 @@
 provider "aws" {
   region = var.region
   shared_credentials_files = ["$HOME/.aws/credentials"]
-  profile = "devteam"
+  profile = "default"
 }
 
 # data "aws_availability_zones" "available" {}
@@ -41,7 +41,7 @@ module "vpc" {
 module "s3_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
 
-  bucket = "terraform.eks.s3.bucket.for.dev.team"
+  bucket = "terraform.eks.s3.bucket.for.lee.team"
   acl    = "private"
 
   versioning = {

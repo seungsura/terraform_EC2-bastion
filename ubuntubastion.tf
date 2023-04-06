@@ -20,6 +20,16 @@ resource "aws_instance" "ubuntu_bastion" {
     destination = "/home/ubuntu/install.sh"
   }
 
+  provisioner "file" {
+    source      = "./install_istio.sh"
+    destination = "/home/ubuntu/install_istio.sh"
+  }
+
+  provisioner "file" {
+    source      = "./install_argocd.sh"
+    destination = "/home/ubuntu/install_istio.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
       "sudo sh /home/ubuntu/install.sh"
