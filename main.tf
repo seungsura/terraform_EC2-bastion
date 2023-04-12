@@ -56,7 +56,7 @@ module "eks" {
 
   cluster_name    = local.cluster_name
   cluster_version = "1.24"
-  
+
 
   vpc_id                         = module.vpc.vpc_id
   subnet_ids                     = module.vpc.private_subnets
@@ -75,6 +75,7 @@ module "eks" {
       min_size     = 1
       max_size     = 2
       desired_size = 1
+      subnets = [module.vpc.private_subnets[0]]
     }
 
     two = {
@@ -85,6 +86,7 @@ module "eks" {
       min_size     = 1
       max_size     = 2
       desired_size = 1
+      subnets = [module.vpc.private_subnets[1]]
     }
   }
 }
